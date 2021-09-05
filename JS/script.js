@@ -1,14 +1,17 @@
 let btn1 = document.getElementById("btn1");
 
+const sort_options = ["name", "id : low - high", "id : high to low"];
+
 const search_bar = document.getElementById("filter-jobs");
 
 search_bar.addEventListener("keypress", () => {
     const text = search_bar.value;
+    const sort_by = "name";
     console.log(text);
     if(text.length >= 2){
         console.log("Length greater than 2")
         getJobs().then(jobs=>{
-            let filteredJobs = filterJobs(jobs,text);
+            let filteredJobs = filterJobs(jobs,text, sort_by);
             showJobs(filteredJobs);
         });
     }
@@ -31,7 +34,7 @@ function getJobs(){
     })
 }
 
-function filterJobs(jobs,searchText){
+function filterJobs(jobs,searchText, sort_by){
     if(searchText){
         let filteredJobs = jobs.filter(job=>{
         if(job.roleName.toLowerCase().includes(searchText) ||
@@ -45,6 +48,22 @@ function filterJobs(jobs,searchText){
             return false;
         }
         })
+
+        if(sort_by === "name"){
+            filteredJobs.sort((a, b) => {
+                return a.localeCompare(b);
+            });
+        }
+        else if(sort_by === "id : low - high"){
+            filteredJobs.sort((a, b) => {
+                return a.id < b.id;
+            })
+        }
+        else{
+            filteredJobs.sort((a, b) => {
+                return a.id > b.id;
+            })
+        }
         return filteredJobs;
     }else{
         return jobs;
