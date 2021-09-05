@@ -1,8 +1,7 @@
 let btn1 = document.getElementById("btn1");
 
 const search_bar = document.getElementById("filter-jobs");
-
-search_bar.addEventListener("change", () => {
+search_bar.addEventListener("keypress", () => {
     const data = this.StyleSheet.value;
     if(data.length >= 2){
         getJobs().then(jobs=>{
