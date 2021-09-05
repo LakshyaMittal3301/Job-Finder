@@ -5,7 +5,7 @@ const search_bar = document.getElementById("filter-jobs");
 search_bar.addEventListener("keypress", () => {
     const text = search_bar.value;
     console.log(text);
-    if(data.length >= 2){
+    if(text.length >= 2){
         console.log("Length greater than 2")
         getJobs().then(jobs=>{
             let filteredJobs = filterJobs(jobs,text);
