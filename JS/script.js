@@ -1,5 +1,6 @@
 let btn1 = document.getElementById("btn1");
 
+const accessToken = "169717075290167"; 
 const sort_options = ["name", "id : low - high", "id : high to low"];
 
 const search_bar = document.getElementById("filter-jobs");
@@ -28,7 +29,10 @@ btn1.addEventListener("click",()=>{
 })
 
 function getJobs(){
-    return fetch("./data.json")
+    const url =`https://superheroapi.com/api/${accessToken}/search/name`
+    return fetch(url, {
+        mode: 'no-cors' // 'cors' by default
+      })
     .then(response=>response.json())
     .then(data=>{
         return data
@@ -36,41 +40,46 @@ function getJobs(){
 }
 
 function filterJobs(jobs,searchText, sort_by){
-    if(searchText){
-        let filteredJobs = jobs.filter(job=>{
-        if(job.roleName.toLowerCase().includes(searchText) ||
-        job.type.toLowerCase().includes(searchText)|| 
-        job.company.toLowerCase().includes(searchText)||
-        job.requirements.content.toLowerCase().includes(searchText))
-        {
-        return true;
-        }
-        else{
-            return false;
-        }
-        })
-
-        if(sort_by === "name"){
-            filteredJobs.sort((a, b) => {
-                return a.roleName.localeCompare(b.roleName);
-            });
-        }
-        else if(sort_by === "id : low - high"){
-            filteredJobs.sort((a, b) => {
-                return a.id < b.id;
-            })
-        }
-        else{
-            filteredJobs.sort((a, b) => {
-                return a.id > b.id;
-            })
-        }
-        return filteredJobs;
-    }else{
-        return jobs;
-    }
-
+    return jobs;
 }
+    // if(searchText){
+    //     let filteredJobs = jobs.filter(job=>{
+    //         return true;
+    //     }
+    // }
+        // if(job.roleName.toLowerCase().includes(searchText) ||
+        // job.type.toLowerCase().includes(searchText)|| 
+        // job.company.toLowerCase().includes(searchText)||
+        // job.requirements.content.toLowerCase().includes(searchText))
+        // {
+        // return true;
+        // }
+        // else{
+        //     return false;
+        // }
+        // })
+
+        // if(sort_by === "name"){
+        //     filteredJobs.sort((a, b) => {
+        //         return a.roleName.localeCompare(b.roleName);
+        //     });
+        // }
+        // else if(sort_by === "id : low - high"){
+        //     filteredJobs.sort((a, b) => {
+        //         return a.id < b.id;
+        //     })
+        // }
+        // else{
+        //     filteredJobs.sort((a, b) => {
+        //         return a.id > b.id;
+        //     })
+        // }
+        // return filteredJobs;
+        
+//     }else{
+//         return jobs;
+//     }
+// }
 function showJobs(jobs){
     console.log(jobs);
     let  jobsContainer = document.querySelector(".jobs-container");
@@ -79,14 +88,14 @@ function showJobs(jobs){
     jobs.forEach(job=>{
         jobsHTML+=`<div class="job-tile">
         <div class="top">
-            <img src="${job.logo}" alt="">
+            <img src="${job.results.id}" alt="">
             <span class="material-icons more_horiz">more_horiz</span>
         </div>
         <div class="rolename">
-            <span>${job.roleName}</span>
+            <span>${job.results.name}</span>
         </div>
         <div class="description">
-            <span>${job.requirements.content}</span>
+            <span>${job.results.powerstats.intelligence}</span>
         </div>
         <div class="buttons">
             <div class="button apply-now">
