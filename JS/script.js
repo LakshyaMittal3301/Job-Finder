@@ -52,7 +52,7 @@ function filterJobs(jobs,searchText, sort_by){
 
         if(sort_by === "name"){
             filteredJobs.sort((a, b) => {
-                return a.company.localeCompare(b.company);
+                return a.roleName.localeCompare(b.roleName);
             });
         }
         else if(sort_by === "id : low - high"){
