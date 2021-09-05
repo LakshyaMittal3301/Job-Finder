@@ -19,9 +19,10 @@ search_bar.addEventListener("keypress", () => {
 
 console.log("Button", btn1)
 btn1.addEventListener("click",()=>{
+    const sort_by = "name";
     let text=document.getElementById("filter-jobs").value;
     getJobs().then(jobs=>{
-        let filteredJobs = filterJobs(jobs,text);
+        let filteredJobs = filterJobs(jobs,text, sort_by);
         showJobs(filteredJobs);
     })
 })
@@ -51,7 +52,7 @@ function filterJobs(jobs,searchText, sort_by){
 
         if(sort_by === "name"){
             filteredJobs.sort((a, b) => {
-                return a.localeCompare(b);
+                return a.company.localeCompare(b.company);
             });
         }
         else if(sort_by === "id : low - high"){
