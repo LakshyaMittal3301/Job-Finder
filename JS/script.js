@@ -1,4 +1,17 @@
 let btn1 = document.getElementById("btn1");
+
+const search_bar = document.getElementById("filter-jobs");
+
+search_bar.addEventListener("change", () => {
+    const data = this.StyleSheet.value;
+    if(data.length >= 2){
+        getJobs().then(jobs=>{
+            let filteredJobs = filterJobs(jobs,text);
+            showJobs(filteredJobs);
+        });
+    }
+});
+
 console.log("Button", btn1)
 btn1.addEventListener("click",()=>{
     let text=document.getElementById("filter-jobs").value;
